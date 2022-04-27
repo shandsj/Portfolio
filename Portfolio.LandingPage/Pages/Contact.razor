@@ -1,0 +1,58 @@
+﻿@page "/contact"
+@inject HttpClient httpClient
+
+<PageTitle>Contact Me</PageTitle>
+
+<div class="container">
+    <div class="row">
+        <h2>Contact Me</h2>
+    </div>
+
+    <EditForm Model="@contactModel" OnValidSubmit="@HandleValidSubmitAsync">
+        <div class="form-group">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row">
+                <div class="col-4">
+                    <InputText class="form-control form-control-lg" id="name" @bind-Value="contactModel.Name" placeholder="Name" />
+                </div>
+                <div class="col-4">
+                    <InputText class="form-control form-control-lg" id="email" @bind-Value="contactModel.Email" placeholder="Email" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <InputTextArea class="form-control form-control-lg" id="text" @bind-Value="contactModel.Message" placeholder="Message" rows="4" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5"></div>
+                <div class="col-3">
+                    <button class="form-control form-control-lg btn btn-primary" type="submit">Send</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+
+    private ContactModel contactModel = new();
+
+    private async Task HandleValidSubmitAsync()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://shandsj-portfolio.azurewebsites.net/api/ContactMe");
+        request.Content = JsonContent.Create(new 
+        {
+            Name = contactModel.Name,
+            Email = contactModel.Email,
+            Message = contactModel.Message,
+        });
+
+        using var httpResponse = await httpClient.SendAsync(request);
+        @* var response = await httpResponse.Content.ReadFromJsonAsync(); *@
+
+        @* httpClient.GetFromJsonAsync() *@
+    }
+}

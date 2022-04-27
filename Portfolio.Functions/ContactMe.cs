@@ -28,7 +28,9 @@ namespace Portfolio.Functions
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            name = name ?? data?.Name;
+            email = email ?? data?.Email;
+            text = text ?? data?.Message;
 
             try
             {
