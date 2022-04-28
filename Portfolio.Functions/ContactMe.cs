@@ -24,12 +24,12 @@ namespace Portfolio.Functions
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Message message = JsonConvert.DeserializeObject<Message>(requestBody);
+            Contact contact = JsonConvert.DeserializeObject<Contact>(requestBody);
 
             var sendGridMessage = new SendGridMessage();
             sendGridMessage.AddTo("jason.shands@gmail.com");
-            sendGridMessage.AddContent("text/html", message.Text);
-            sendGridMessage.SetSubject($"Your portfolio received a message from {message.Name} ({message.Email})");
+            sendGridMessage.AddContent("text/html", contact.Message);
+            sendGridMessage.SetSubject($"Your portfolio received a message from {contact.Name} ({contact.Email})");
             sendGridMessage.SetFrom("jason.shands@gmail.com");
             await messages.AddAsync(sendGridMessage);
 

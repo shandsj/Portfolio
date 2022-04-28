@@ -1,9 +1,9 @@
 namespace Portfolio.Domain;
 
 /// <summary>
-/// A value object that represents a message.
+/// A value object that represents a contact.
 /// </summary>
-public class Message
+public class Contact
 {
     /// <summary>
     /// Gets or sets the name of the sender.
@@ -16,7 +16,7 @@ public class Message
     public string Email { get; set; }
 
     /// <summary>
-    /// Gets or sets the text.
+    /// Gets or sets the message.
     /// </summary>
-    public string Text { get; set; }
+    public string Message { get; set; }
 }
