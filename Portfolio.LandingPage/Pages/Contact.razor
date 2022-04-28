@@ -42,7 +42,7 @@
 
     private async Task HandleValidSubmitAsync()
     {
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://shandsj-portfolio.azurewebsites.net/api/ContactMe");
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://shandsj-portfolio.azurewebsites.net/api/contact");
         request.Content = JsonContent.Create(new 
         {
             Name = contactModel.Name,

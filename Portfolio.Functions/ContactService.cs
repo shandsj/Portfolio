@@ -13,11 +13,14 @@ using SendGrid.Helpers.Mail;
 
 namespace Portfolio.Functions
 {
-    public static class ContactMe
+    /// <summary>
+    /// Service that hosts the Azure Functions for sending a contact email.
+    /// </summary>
+    public static class ContactService
     {
         [FunctionName("ContactMe")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+        public static async Task<IActionResult> ContactMeAsync(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "contact")] HttpRequest req,
             [SendGrid(ApiKey = "SENDGRID_API_KEY")] IAsyncCollector<SendGridMessage> messages,
             ILogger log)
         {
