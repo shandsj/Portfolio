@@ -9,48 +9,31 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Portfolio.Domain;
 using System.Threading;
+using SendGrid.Helpers.Mail;
 
 namespace Portfolio.Functions
 {
-    public static class SendEmail
+    public static class ContactMe
     {
         [FunctionName("ContactMe")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            [SendGrid(ApiKey = "SENDGRID_API_KEY")] IAsyncCollector<SendGridMessage> messages,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
-            string email = req.Query["email"];
-            string subject = req.Query["subject"];
-            string text = req.Query["text"];            
-
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            log.LogInformation($"Data received: {requestBody}");
-            name = name ?? data?.name;
-            email = email ?? data?.email;
-            text = text ?? data?.message;
+            Message message = JsonConvert.DeserializeObject<Message>(requestBody);
 
-            try
-            {
-                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                var message = new Message(name, email, subject, text);
-                var service = new MessagingService();
-                await service.SendMessageAsync(message, cts.Token);
-                log.LogInformation("Message sent.");
-            }
-            catch (Exception e)
-            {
-                return new NotFoundObjectResult(e);
-            }
+            var sendGridMessage = new SendGridMessage();
+            sendGridMessage.AddTo("jason.shands@gmail.com");
+            sendGridMessage.AddContent("text/html", message.Text);
+            sendGridMessage.SetSubject($"Your portfolio received a message from {message.Name} ({message.Email})");
+            sendGridMessage.SetFrom("jason.shands@gmail.com");
+            await messages.AddAsync(sendGridMessage);
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-            return new OkObjectResult(responseMessage);
+            return new OkResult();
         }
     }
 }
