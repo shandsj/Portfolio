@@ -8,6 +8,38 @@
         <h2>Contact Me</h2>
     </div>
 
+    @switch (status) {        
+        case Status.Sending:
+            <div class="row">
+                <div class="col-8">
+                    <div class="col alert alert-primary" role="alert">
+                        Sending message...
+                    </div>
+                </div>
+            </div>
+            break;
+
+        case Status.Sent:
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-success" role="alert">
+                        Message sent!
+                    </div>
+                </div>
+            </div>
+            break;
+
+        case Status.Failed:
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-danger" role="alert">
+                        Message could not be sent!
+                    </div>
+                </div>
+            </div>
+            break;
+    }
+
     <EditForm Model="@contactModel" OnValidSubmit="@HandleValidSubmitAsync">
         <div class="form-group">
             <DataAnnotationsValidator />
@@ -29,7 +61,7 @@
             <div class="row">
                 <div class="col-5"></div>
                 <div class="col-3">
-                    <button class="form-control form-control-lg btn btn-primary" type="submit">Send</button>
+                    <button class="form-control form-control-lg btn btn-primary" type="submit" disabled="@(status != Status.NotSent && status != Status.Failed)">Send</button>
                 </div>
             </div>
         </div>
@@ -39,9 +71,24 @@
 @code {
 
     private ContactModel contactModel = new();
+    enum Status {
+        NotSent,
+        Sending,
+        Sent,
+        Failed,
+    }
+
+    private Status status = Status.NotSent;
+
+    private bool IsFormEnabled()
+    {
+        return status == Status.NotSent;
+    }
 
     private async Task HandleValidSubmitAsync()
     {
+        status = Status.Sending;
+
         var request = new HttpRequestMessage(HttpMethod.Post, "https://shandsj-portfolio.azurewebsites.net/api/contact");
         request.Content = JsonContent.Create(new 
         {
@@ -52,7 +99,13 @@
 
         using var httpResponse = await httpClient.SendAsync(request);
         @* var response = await httpResponse.Content.ReadFromJsonAsync(); *@
-
-        @* httpClient.GetFromJsonAsync() *@
+        if (httpResponse.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            status = Status.Sent;
+        }
+        else
+        {
+            status = Status.Failed;
+        }
     }
 }
