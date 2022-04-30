@@ -6,13 +6,14 @@
 <div class="container">
     <div class="row">
         <h2>Contact Me</h2>
+        <p>I'm interested in freelance opportunities. Feel free to reach out to me!</p>
     </div>
 
     @switch (status) {        
         case Status.Sending:
             <div class="row">
-                <div class="col-8">
-                    <div class="col alert alert-primary" role="alert">
+                <div class="col-lg-8">
+                    <div class="alert alert-primary" role="alert">
                         Sending message...
                     </div>
                 </div>
@@ -21,7 +22,7 @@
 
         case Status.Sent:
             <div class="row">
-                <div class="col-8">
+                <div class="col-lg-8">
                     <div class="alert alert-success" role="alert">
                         Message sent!
                     </div>
@@ -31,7 +32,7 @@
 
         case Status.Failed:
             <div class="row">
-                <div class="col-8">
+                <div class="col-lg-8">
                     <div class="alert alert-danger" role="alert">
                         Message could not be sent!
                     </div>
@@ -44,26 +45,32 @@
         <div class="form-group">
             <DataAnnotationsValidator />
             <ValidationSummary />
-
-            <div class="row">
-                <div class="col-4">
-                    <InputText class="form-control form-control-lg" id="name" @bind-Value="contactModel.Name" placeholder="Name" />
+            
+            <p>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <InputText class="form-control form-control-lg" id="name" @bind-Value="contactModel.Name" placeholder="Name" />
+                    </div>
+                    <div class="col-lg-4">
+                        <InputText class="form-control form-control-lg" id="email" @bind-Value="contactModel.Email" placeholder="Email" />
+                    </div>
                 </div>
-                <div class="col-4">
-                    <InputText class="form-control form-control-lg" id="email" @bind-Value="contactModel.Email" placeholder="Email" />
+            </p>
+            <p>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <InputTextArea class="form-control form-control-lg" id="text" @bind-Value="contactModel.Message" placeholder="Message" rows="4" />
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-8">
-                    <InputTextArea class="form-control form-control-lg" id="text" @bind-Value="contactModel.Message" placeholder="Message" rows="4" />
+            </p>
+            <p>
+                <div class="row">
+                    <div class="col-lg-5"></div>
+                    <div class="col-lg-3">
+                        <button class="form-control form-control-lg btn btn-primary" type="submit" disabled="@(status != Status.NotSent && status != Status.Failed)">Send</button>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-5"></div>
-                <div class="col-3">
-                    <button class="form-control form-control-lg btn btn-primary" type="submit" disabled="@(status != Status.NotSent && status != Status.Failed)">Send</button>
-                </div>
-            </div>
+            </p>
         </div>
     </EditForm>
 </div>
