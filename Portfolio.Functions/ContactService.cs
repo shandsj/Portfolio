@@ -30,10 +30,10 @@ namespace Portfolio.Functions
             Contact contact = JsonConvert.DeserializeObject<Contact>(requestBody);
 
             var sendGridMessage = new SendGridMessage();
-            sendGridMessage.AddTo("jason.shands@gmail.com");
+            sendGridMessage.AddTo(Environment.GetEnvironmentVariable("MY_EMAIL_ADDRESS", EnvironmentVariableTarget.Process));
             sendGridMessage.AddContent("text/html", contact.Message);
             sendGridMessage.SetSubject($"Your portfolio received a message from {contact.Name} ({contact.Email})");
-            sendGridMessage.SetFrom("jason.shands@gmail.com");
+            sendGridMessage.SetFrom(Environment.GetEnvironmentVariable("MY_EMAIL_ADDRESS", EnvironmentVariableTarget.Process));
             await messages.AddAsync(sendGridMessage);
 
             return new OkResult();
