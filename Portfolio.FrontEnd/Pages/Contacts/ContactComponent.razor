@@ -41,7 +41,7 @@
             break;
     }
 
-    <EditForm Model="@contactModel" OnValidSubmit="@HandleValidSubmitAsync">
+    <EditForm Model="@contact" OnValidSubmit="@HandleValidSubmitAsync">
         <div class="form-group">
             <DataAnnotationsValidator />
             <ValidationSummary />
@@ -49,17 +49,17 @@
             <p>
                 <div class="row">
                     <div class="col-lg-4">
-                        <InputText class="form-control form-control-lg" id="name" @bind-Value="contactModel.Name" placeholder="Name" />
+                        <InputText class="form-control form-control-lg" id="name" @bind-Value="contact.Name" placeholder="Name" />
                     </div>
                     <div class="col-lg-4">
-                        <InputText class="form-control form-control-lg" id="email" @bind-Value="contactModel.Email" placeholder="Email" />
+                        <InputText class="form-control form-control-lg" id="email" @bind-Value="contact.Email" placeholder="Email" />
                     </div>
                 </div>
             </p>
             <p>
                 <div class="row">
                     <div class="col-lg-8">
-                        <InputTextArea class="form-control form-control-lg" id="text" @bind-Value="contactModel.Message" placeholder="Message" rows="4" />
+                        <InputTextArea class="form-control form-control-lg" id="text" @bind-Value="contact.Message" placeholder="Message" rows="4" />
                     </div>
                 </div>
             </p>
@@ -77,7 +77,7 @@
 
 @code {
 
-    private ContactModel contactModel = new();
+    private ContactComponentModel contact = new();
     enum Status {
         NotSent,
         Sending,
@@ -99,9 +99,9 @@
         var request = new HttpRequestMessage(HttpMethod.Post, "https://shandsj-portfolio.azurewebsites.net/api/contact");
         request.Content = JsonContent.Create(new 
         {
-            Name = contactModel.Name,
-            Email = contactModel.Email,
-            Message = contactModel.Message,
+            Name = contact.Name,
+            Email = contact.Email,
+            Message = contact.Message,
         });
 
         using var httpResponse = await httpClient.SendAsync(request);
