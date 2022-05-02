@@ -3,16 +3,46 @@
 
 <PageTitle>Contact Me</PageTitle>
 
-<div class="container p-5">
+<div class="container p-lg-5">
     <div class="row">
-        <h1><i class="fa-solid fa-envelope"></i> Contact Me</h1>
-        <p>I'm interested in freelance opportunities. Feel free to reach out to me!</p>
+        <div class="col-lg-12">
+            <h1>Contact Me</h1>
+            <p>I'm interested in freelancing opportunities as time permits. Feel free to reach out! I'd love to hear from you.</p>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col-lg-6">
+            <h2><i class="fa-solid fa-hashtag"></i> Social Media</h2>
+            <p>Connect with me on social media!</p>
+            <p>
+                <a href="https://www.linkedin.com/in/jason-shands-215757238/">
+                    <i class="fa-2x fa-brands fa-linkedin-in"></i>
+                </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="https://github.com/shandsj">
+                    <i class="fa-2x fa-brands fa-github"></i>
+                </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="https://twitter.com/shandsjm">
+                    <i class="fa-2x fa-brands fa-twitter"></i>
+                </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="https://codingoncaffeineblog.wordpress.com/">
+                    <i class="fa-2x fa-brands fa-wordpress"></i>
+                </a>
+            </p>
+        </div>
+        <div class="col-lg-6">
+            <h2><i class="fa-solid fa-envelope"></i> Email</h2>
+            <p><a href="mailto:jason.shands@gmail.com">Send me an email!</a></p>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <h2><i class="fa-solid fa-message"></i> Message</h2>
+        <p>Send me a quick message here!</p>
     </div>
 
     @switch (status) {        
         case Status.Sending:
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="alert alert-primary" role="alert">
                         Sending message...
                     </div>
@@ -22,7 +52,7 @@
 
         case Status.Sent:
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="alert alert-success" role="alert">
                         Message sent!
                     </div>
@@ -32,7 +62,7 @@
 
         case Status.Failed:
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="alert alert-danger" role="alert">
                         Message could not be sent!
                     </div>
@@ -48,25 +78,25 @@
             
             <p>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <InputText class="form-control form-control-lg" id="name" @bind-Value="contact.Name" placeholder="Name" />
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <InputText class="form-control form-control-lg" id="email" @bind-Value="contact.Email" placeholder="Email" />
                     </div>
                 </div>
             </p>
             <p>
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <InputTextArea class="form-control form-control-lg" id="text" @bind-Value="contact.Message" placeholder="Message" rows="4" />
                     </div>
                 </div>
             </p>
             <p>
                 <div class="row">
-                    <div class="col-lg-5"></div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-9"></div>
+                    <div class="col-lg-3 pb-2">
                         <button class="form-control form-control-lg btn btn-primary" type="submit" disabled="@(status != Status.NotSent && status != Status.Failed)">Send</button>
                     </div>
                 </div>
