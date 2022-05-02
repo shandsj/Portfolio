@@ -1,5 +1,4 @@
 @page "/about"
-@inject NavigationManager navigationManager
 
 <PageTitle>About</PageTitle>
 
@@ -23,14 +22,7 @@
         </div>
         <div class="col-lg-1"></div>
         <div class="col-lg-6" >
-            <img class="img-fluid" src="@GetAbsoluteImageUri()" />
+            <img class="img-fluid" src="images/me2.JPG" />
         </div>
     </div>
 </div>
-
-@code {
-    private string GetAbsoluteImageUri()
-    {
-        return this.navigationManager.ToAbsoluteUri("images/me2.jpg").ToString();
-    }
-}
