@@ -1,0 +1,62 @@
+@page "/blog"
+
+@using WordPressPCL;
+@using WordPressPCL.Models
+@using WordPressPCL.Utility
+
+<div class="container p-lg-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>Blog</h1>
+            <p>
+                I blog occassionally at <a href="https://codingoncaffeineblog.wordpress.com">Coding on Caffeine</a> on technical and programming related topics. 
+                Here are a couple of excerpts from my latest posts.
+            </p>
+            <img class="img-fluid" src="images/me3.jpg" />
+        </div>
+        <div class="col-lg-6">
+            @if (this.posts == null || !this.posts.Any()) 
+            {
+                <div class="row">
+                    <div class="d-flex justify-content-center p-5">
+                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                foreach (var post in this.posts)
+                {
+                    <div class="row">
+                        <div class="col">
+                            <h4>@(new MarkupString(post.Title.Rendered))</h4>
+                            <p class="text-muted">@(post.Date.ToLongDateString()) by Jason</p>
+                            <p>@(new MarkupString(post.Excerpt.Rendered))</p>
+                            <p><a href="@post.Link">Read more</a></p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="col-lg-6">
+
+        </div>
+    </div>
+</div>
+
+@code
+{
+    private IEnumerable<Post>? posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client = new WordPressClient("https://public-api.wordpress.com/wp/v2/sites/codingoncaffeineblog.wordpress.com/", "");
+        var queryBuilder = new PostsQueryBuilder();
+        queryBuilder.PerPage = 3;
+        queryBuilder.Page = 1;
+        queryBuilder.Authors = new List<int>(){ 19299696 };
+        this.posts = await client.Posts.QueryAsync(queryBuilder);
+    }
+}
