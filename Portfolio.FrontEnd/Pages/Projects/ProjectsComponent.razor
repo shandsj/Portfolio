@@ -1,0 +1,61 @@
+@page "/projects"
+
+<div class="container p-lg-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Projects</h1>
+            <p>
+                Here are some of the projects I've been working on recently.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card" style="margin: .25rem;">
+                @* <img class="card-img-top" src="images/snake.png" alt="Card image cap"> *@
+                <div class="card-body">
+                    <h4 class="card-title">Phaser 3 Snake Clone</h4>
+                    <p class="card-text">
+                        A clone of the original Snake game I made in Phaser 3. 
+                        All the artwork is original pixel art. You can see the source for
+                        this project on my <a href="https://github.com/shandsj/phaser3-snake-clone">GitHub</a>, 
+                        or you can play the game in your browser!
+                    </p>
+                    <a href="https://snake.shands.dev" class="btn btn-primary">Play Snake Clone</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card" style="margin: .25rem;">
+                @* <img class="card-img-top" src="..." alt="Card image cap"> *@
+                <div class="card-body">
+                    <h4 class="card-title">Scoreboardly</h4>
+                    <p class="card-text">
+                        Scoreboardly is a REST API for storing and retrieving high scores in games.
+                        It runs in Azure using Azure Functions and Cosmos DB. This is still a work
+                        in progress, but has a functional API.</p>
+                    <a href="https://github.com/shandsj/Scoreboardly" class="btn btn-primary">Scoreboardly on GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card" style="margin: .25rem;">
+                @* <img class="card-img-top" src="..." alt="Card image cap"> *@
+                <div class="card-body">
+                    <h5 class="card-title">Portfolio</h5>
+                    <p class="card-text">This portfolio web application is a SPA using Blazor and Azure Functions.
+                        I've made the source available on GitHub, for anyone that wants to take a peek.</p>
+                    <a href="https://github.com/shandsj/Portfolio" class="btn btn-primary">Portfolio on GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+    }
+}
